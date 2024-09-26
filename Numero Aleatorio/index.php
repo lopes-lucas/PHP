@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="../estilo/style.css">
 </head>
 <body>
-    <header>
-        <h1>Gerador de Números Aleatório com PHP</h1>
-    </header>
     <main>
+        <h1>Gerador de Números Aleatório com PHP</h1>
         <?php 
 
         $aletorio = mt_rand(0, 100);
@@ -20,7 +18,7 @@
         echo "O valor gerado foi <estrong>$aletorio</estrong><br>";
         echo "<br>";
         ?>
-        <button><a onclick="Refresh()">Gerar Outro Número</button>
+        <button onclick="Refresh()">Gerar Outro Número</button>
     </main>
     <script>
         function Refresh(){

@@ -11,24 +11,25 @@
         <h1>Resultado Final</h1>
     </header>
     <main>
-        <?php 
-            $number = $_GET["numero"];
-            $antecessor = $number - 1;
-            $sucessor = $number + 1;
-            $multiplica = $number * 2;
-            $divisor = $number / 2;
-
-            echo "Seu número digitado é <strong>$number</strong><br>";
-            echo "<br>";
-            echo "O seu antecessor é $antecessor <br>";
-            echo "<br>";
-            echo "O seu sucessor é $sucessor. <br>";
-            echo "<br>";
-            echo "Seu número multiplicado por 2 é igual $multiplica. <br>";
-            echo "<br>";
-            echo "Seu número dividido por 2 é igual $divisor."
-        ?>
-        <p><a href="javascript:history.go(-1)">Voltar para página anterior.</a></p>
+        <p>
+            <?php
+                $number = $_GET["numero"] ?? 0;
+                $antecessor = $number - 1;
+                $sucessor = $number + 1;
+                $multiplica = $number * 2;
+                $divisor = $number / 2;
+                echo "Seu número digitado é <strong>$number</strong><br>";
+                echo "<br>";
+                echo "O seu <em>antecessor</em> é $antecessor. <br>";
+                echo "<br>";
+                echo "O seu <em>sucessor</em> é $sucessor. <br>";
+                echo "<br>";
+                echo "Seu número multiplicado por 2 é igual $multiplica. <br>";
+                echo "<br>";
+                echo "Seu número dividido por 2 é igual $divisor."
+            ?>
+        </p>
+        <button onclick="javascript:window.location.href='index.html'">&#x2b05; Voltar</button>
     </main>
 </body>
 </html>
