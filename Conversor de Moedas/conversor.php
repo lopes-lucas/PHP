@@ -8,66 +8,30 @@
 </head>
 <body>
     <header>
-        <h1>Conversor de Moedas v1.0</h1>
+        <h1>Conversor de Moedas v2.0</h1>
+        <h2>Cotação via API do Banco Central</h2>
     </header>
     <section>
     <?php
-// Define a data que você deseja consultar (no formato dd-mm-yyyy)
-$dataConsulta = '25-09-2024'; // Por exemplo, data de ontem
+        // Cotação vinda da API do Banco Central
+        $inicio = date("m-d-Y", strtotime("-7 days"));
+        $fim = date("m-d-Y");
 
-// Monta a URL com a data específica
-$url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao=\'' . $dataConsulta . '\'&$format=json';
-
-// Inicializa a sessão cURL
-$ch = curl_init();
-
-// Configura as opções do cURL
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Desativa a verificação de certificado SSL (se necessário)
-
-// Executa a requisição e armazena a resposta
-$response = curl_exec($ch);
-
-// Verifica se houve erros na requisição
-if (curl_errno($ch)) {
-    echo 'Erro cURL: ' . curl_error($ch);
-} else {
-    // Verifica o código de resposta HTTP
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $url = 'https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial=\''.$inicio .'\'&@dataFinalCotacao=\''. $fim .'\'&$top=1&$orderby=dataHoraCotacao%20desc&$format=json&$select=cotacaoCompra,dataHoraCotacao';
     
-    if ($httpCode == 200) {
-        // Decodifica o JSON para um array associativo
-        $data = json_decode($response, true);
+        $dados = json_decode(file_get_contents($url), true);
+        $cotacao = $dados["value"][0]["cotacaoCompra"];
 
-        // Verifica se existe algum valor retornado
-        if (isset($data['value']) && !empty($data['value'])) {
-            // Acessa a cotação do dólar
-            $cotacaoDolar = $data['value'][0]['cotacaoCompra'];
+        $real = $_REQUEST["numero"] ?? 0;
+        $dolar = $real / $cotacao;
 
-            echo "A cotação do dólar em $dataConsulta é: R$ " . number_format($cotacaoDolar, 2, ',', '.');
-        } else {
-            echo "Nenhuma cotação encontrada para a data: $dataConsulta";
-        }
-    } else {
-        echo "Erro ao acessar a API. Código HTTP: $httpCode";
-    }
-}
+        //Biblioteca intl (Internallization PHP) 
+        $padrao = numfmt_create("pr-BR", NumberFormatter::CURRENCY);
 
-// Fecha a sessão cURL
-curl_close($ch);
-?>
-
-
-        <button><a href="javascript:history.go(-1)">Voltar</a></button>
+        echo "<p>Seus ". numfmt_format_currency($padrao, $real, "BRL") . " equivalem a ". numfmt_format_currency($padrao, $dolar, "USD") . "</p>";
+        echo "<p>Valor do dolar $cotacao.</p>"
+    ?>
+    <button><a href="javascript:history.go(-1)">Voltar</a></button>
     </section>
 </body>
 </html>
-
-$valor = $_GET["numero"];
-            $dolar = $valor * 0.18;
-
-            echo "Seu R$ $valor equivalem a US$ <strong>$dolar.</strong><br>";
-            echo "<br>";
-            echo "<strong>Cotação fixa de R$ 5.47</strong> informada diretamente no código.<br>";
-            echo "<br>"

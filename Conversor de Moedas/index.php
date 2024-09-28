@@ -15,7 +15,7 @@
     <section>
         <form action="conversor.php" method="get">
             <label for="numero">Digite um valor de R$:</label>
-            <input type="number" name="numero" id="numero">
+            <input type="number" name="numero" id="numero" step="0.01">
             <input type="submit" value="Converter">
         </form>
     </section>
