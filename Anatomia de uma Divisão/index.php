@@ -9,30 +9,42 @@
 <body>
     <?php 
         $dividendo = $_GET['div'] ?? 0;
-        $divisor = $_GET['divisor'] ?? 0;
+        $divisor = $_GET['divisor'] ?? 1;
     ?>
     <main>
         <h1>Anantomia de uma Divisão</h1>
         <form action="<?=$_SERVER['PHP_SELF']?>" method="get">
             <label for="div">Dividendo</label>
-            <input type="number" name="div" id="div"  value="<?=$dividendo?>">
+            <input type="number" name="div"  min="0" id="d2"  value="<?=$dividendo?>">
             <label for="divisor">Divisor</label>
-            <input type="number" name="divisor" id="divisor" value="<?=$divisor?>">
+            <input type="number" name="divisor" min="1" id="d1" value="<?=$divisor?>">
             <input type="submit" value="Calcular">
         </form>
     </main>
     
-    <section id="resultado">
+    <section>
         <h2>Estrutura da Divisão</h2>
         <?php
-            $calculo = intdiv($dividendo, $divisor);
+            $quociente = intdiv($dividendo, $divisor);
             $resto = fmod($dividendo, $divisor);
 
-            echo "<p>Quociente é $calculo.</p>";
-            echo "<p> O resto da divisão é $resto.</p>";
-            echo "Verifique o resultado: $calculo x $divisor + $resto = $dividendo"
-
+            //echo "<ul>";
+            //echo "<li>Dividendo : $dividendo</li>";
+            //echo "<li>Divisor: $divisor</li>";
+            //echo "<li>Quociente: $quociente</li>";
+            //echo "<li>Resto: $resto</li>";
+            //echo "</ul>";
         ?>
+        <table class="divisao">
+            <tr>
+                <td><?=$dividendo?></td>
+                <td><?=$divisor?></td>
+            </tr>
+            <tr>
+                <td><?=$resto?></td>
+                <td><?=$quociente?></td>
+            </tr>
+        </table>
     </section>
 </body>
 </html>
