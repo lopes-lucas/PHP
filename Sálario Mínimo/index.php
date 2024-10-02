@@ -8,8 +8,8 @@
 </head>
 <body>
     <?php 
-        $salario = $_GET['salario'] ?? 0;
         $salario_minimo = 1412;
+        $salario = $_GET['salario'] ?? $salario_minimo;
     ?>
     <main>
         <h1>Infome seu Salário</h1>
@@ -24,10 +24,10 @@
     <section>
         <h1>Resultado Final</h1>
         <?php 
-            $calculo =  $salario / $salario_minimo;
+            $calculo =  intdiv($salario, $salario_minimo );
             //echo "$calculo";
             $resto = fmod($salario, $salario_minimo);
-            echo "Seu salário de R$ ". number_format($salario, 2, ",", ".") ." é igual a ". number_format($calculo, 0) ." salários mínimos + R$ ". number_format($resto, 2, ",", ".") .".";
+            echo "Seu salário de R$ ". number_format($salario, 2, ",", ".") ." é igual a $calculo salários mínimos + R$ ". number_format($resto, 2, ",", ".") .".";
         ?>
     </section>
 
