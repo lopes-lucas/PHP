@@ -1,6 +1,6 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/(.*)", "dest": "Caixa Eletronico/index.php" }
+    { "src": "/(.*)", "dest": "Caixa_Eletronico/index.php" }
   ]
 }
